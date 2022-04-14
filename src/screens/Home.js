@@ -50,13 +50,14 @@ export default class Home extends Component {
   };
 
   enterUser = action => {
+    console.log(this.state.username)
     if (this.state.username) {
       this.setState({
         is_loading: true,
       });
 
       axios
-        .post(`${base_url}/save-user.php`, {
+        .post(`https://b60b-196-12-140-219.in.ngrok.io/ridesharer`, {
           username: this.state.username,
         })
         .then(response => {
