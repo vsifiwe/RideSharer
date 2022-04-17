@@ -14,16 +14,15 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Pusher from 'pusher-js/react-native';
 import Geocoder from 'react-native-geocoding';
 import axios from 'axios';
-import {
-  google_api_key,
-  base_url,
-  pusher_app_key,
-  pusher_app_cluster,
-} from '@env';
 
 import {regionFrom, getLatLonDiffInMeters} from '../lib/location';
 
 import Tapper from '../components/Tapper';
+
+const google_api_key = 'AIzaSyDBhN5LLS6h3KHmp6mPSx9MxqvAkBx7OnU';
+const base_url = 'https://7273-2c0f-eb68-20c-e00-6d75-dc12-927c-b2cd.eu.ngrok.io';
+const pusher_app_key = 'fc751ce6df2bbaa11bca';
+const pusher_app_cluster = 'mt1';
 
 const search_timeout = 1000 * 60 * 10;
 const share_timeout = 1000 * 60 * 5;
@@ -42,7 +41,7 @@ const default_region = {
 var device_width = Dimensions.get('window').width;
 
 export default class Map extends Component {
-  static navigationOptions = ({navigation}) => ({
+  static navigationOptions = ({route, navigation}) => ({
     headerTitle: 'Map',
     headerStyle: {
       backgroundColor: '#007ff5',
@@ -77,8 +76,8 @@ export default class Map extends Component {
   }
 
   componentDidMount() {
-    const {navigation} = this.props;
-    const username = navigation.getParam('username');
+    const {route, navigation} = this.props;
+    const username = route.params['username'];
 
     this.pusher = new Pusher(pusher_app_key, {
       authEndpoint: `${base_url}/pusher-auth.php`,
@@ -135,7 +134,7 @@ export default class Map extends Component {
   }
 
   acceptRide = hiker => {
-    const username = this.props.navigation.getParam('username');
+    const username = this.props.route.params['username'];
 
     let rider_data = {
       username: username,
@@ -167,9 +166,9 @@ export default class Map extends Component {
   };
 
   render() {
-    const {navigation} = this.props;
-    const action = navigation.getParam('action');
-    const username = navigation.getParam('username');
+    const {route,navigation} = this.props;
+    const action = route.params['action'];;
+    const username = route.params['username'];;
 
     let action_button_label = action == 'share' ? 'Share Ride' : 'Search Ride';
 
@@ -336,8 +335,8 @@ export default class Map extends Component {
   };
 
   onPressActionButton = () => {
-    const action = this.props.navigation.getParam('action');
-    const username = this.props.navigation.getParam('username');
+    const action = this.props.route.params['action'];;
+    const username = this.props.route.params['username'];;
 
     this.setState({
       is_loading: true,
