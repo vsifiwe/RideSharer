@@ -13,6 +13,7 @@ import MapViewDirections from 'react-native-maps-directions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Pusher from 'pusher-js/react-native';
 import Geocoder from 'react-native-geocoding';
+import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
 
 import {regionFrom, getLatLonDiffInMeters} from '../lib/location';
@@ -20,7 +21,7 @@ import {regionFrom, getLatLonDiffInMeters} from '../lib/location';
 import Tapper from '../components/Tapper';
 
 const google_api_key = 'AIzaSyDBhN5LLS6h3KHmp6mPSx9MxqvAkBx7OnU';
-const base_url = 'https://7273-2c0f-eb68-20c-e00-6d75-dc12-927c-b2cd.eu.ngrok.io';
+const base_url = 'https://832b-196-12-140-219.eu.ngrok.io/';
 const pusher_app_key = 'fc751ce6df2bbaa11bca';
 const pusher_app_cluster = 'mt1';
 
@@ -108,7 +109,9 @@ export default class Map extends Component {
       );
     });
 
-    navigator.geolocation.getCurrentPosition(position => {
+    
+
+    Geolocation.getCurrentPosition(position => {
       var region = regionFrom(
         position.coords.latitude,
         position.coords.longitude,
@@ -366,7 +369,7 @@ export default class Map extends Component {
         console.log('error occurred while saving route: ', error);
       });
 
-    this.watchId = navigator.geolocation.watchPosition(
+    this.watchId =Geolocation.watchPosition(
       position => {
         let latitude = position.coords.latitude;
         let longitude = position.coords.longitude;

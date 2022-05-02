@@ -167,7 +167,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Tapper from '../components/Tapper';
 
-const base_url = 'https://7273-2c0f-eb68-20c-e00-6d75-dc12-927c-b2cd.eu.ngrok.io';
+const base_url = 'https://832b-196-12-140-219.eu.ngrok.io/';
 
 async function requestGeolocationPermission() {
   try{
@@ -205,6 +205,12 @@ export default class Home extends Component {
 
   
   enterUser = (action) => {
+
+          // this.props.navigation.navigate('Map', {
+          //   action: action,
+          //   username: this.state.username
+          // });
+
     if(this.state.username){
 
       this.setState({
