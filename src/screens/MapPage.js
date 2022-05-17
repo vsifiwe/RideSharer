@@ -21,7 +21,7 @@ import {regionFrom, getLatLonDiffInMeters} from '../lib/location';
 import Tapper from '../components/Tapper';
 
 const google_api_key = 'AIzaSyDBhN5LLS6h3KHmp6mPSx9MxqvAkBx7OnU';
-const base_url = 'https://832b-196-12-140-219.eu.ngrok.io/';
+const base_url = 'https://2f66-197-157-184-150.in.ngrok.io';
 const pusher_app_key = 'fc751ce6df2bbaa11bca';
 const pusher_app_cluster = 'mt1';
 

@@ -1,155 +1,3 @@
-// import React, {Component} from 'react';
-// import {
-//   View,
-//   Text,
-//   StyleSheet,
-//   TextInput,
-//   Alert,
-//   ActivityIndicator,
-//   PermissionsAndroid,
-//   KeyboardAvoidingView,
-// } from 'react-native';
-
-// import axios from 'axios';
-// import Icon from 'react-native-vector-icons/FontAwesome';
-
-// import Tapper from '../components/Tapper';
-// import {base_url} from '@env';
-
-// async function requestGeolocationPermission() {
-//   try {
-//     const granted = await PermissionsAndroid.request(
-//       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-//       {
-//         title: 'Ridesharer Geolocation Permission',
-//         message:
-//           'Ridesharer needs access to your current location so you can share or search for a ride',
-//       },
-//     );
-
-//     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-//       console.log('You can use the geolocation');
-//     } else {
-//       console.log('Geolocation permission denied');
-//     }
-//   } catch (err) {
-//     console.warn(err);
-//   }
-// }
-
-// requestGeolocationPermission();
-
-// export default class Home extends Component {
-//   static navigationOptions = {
-//     header: null,
-//   };
-
-//   state = {
-//     is_loading: false,
-//     username: '',
-//   };
-
-//   enterUser = action => {
-//     console.log(this.state.username)
-//     if (this.state.username) {
-//       this.setState({
-//         is_loading: true,
-//       });
-
-//       axios
-//         .post(`https://7273-2c0f-eb68-20c-e00-6d75-dc12-927c-b2cd.eu.ngrok.io/create-user.php`, {
-//           username: this.state.username,
-//         })
-//         .then(response => {
-//             this.setState({
-//               is_loading: false,
-//             });
-
-//             this.props.navigation.navigate('Map', {
-//               action: action,
-//               username: this.state.username,
-//             });
-          
-//         }).catch(err=> console.error(err));
-//     } else {
-//       Alert.alert('Username required', 'Please enter a username');
-//     }
-//   };
-
-//   render() {
-//     return (
-//       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-//         <View style={styles.jumbo_container}>
-//           <Icon name="crosshairs" size={35} color="#464646" />
-//           <Text style={styles.jumbo_text}>What do you want to do?</Text>
-//         </View>
-
-//         <View>
-//           <TextInput
-//             placeholder="Enter your username"
-//             style={styles.text_field}
-//             onChangeText={username => this.setState({username})}
-//             value={this.state.username}
-//             clearButtonMode={'always'}
-//             returnKeyType={'done'}
-//           />
-//           <ActivityIndicator
-//             size="small"
-//             color="#007ff5"
-//             style={{marginTop: 10}}
-//             animating={this.state.is_loading}
-//           />
-//         </View>
-
-//         <View style={styles.close_container}>
-//           <Tapper
-//             title="Share a Ride"
-//             color="#007ff5"
-//             onPress={() => {
-//               this.enterUser('share');
-//             }}
-//           />
-
-//           <Tapper
-//             title="Hitch a Ride"
-//             color="#00bcf5"
-//             onPress={() => {
-//               this.enterUser('hike');
-//             }}
-//           />
-//         </View>
-//       </KeyboardAvoidingView>
-//     );
-//   }
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     alignItems: 'center',
-//     justifyContent: 'space-around',
-//   },
-//   jumbo_container: {
-//     padding: 50,
-//     alignItems: 'center',
-//   },
-//   jumbo_text: {
-//     marginTop: 20,
-//     textAlign: 'center',
-//     fontSize: 25,
-//     fontWeight: 'bold',
-//   },
-//   text_field: {
-//     width: 200,
-//     height: 50,
-//     padding: 10,
-//     backgroundColor: '#FFF',
-//     borderColor: 'gray',
-//     borderWidth: 1,
-//   },
-// });
-
-
 import React, { Component } from 'react';
 import { 
   View, 
@@ -164,10 +12,11 @@ import {
 
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
 import Tapper from '../components/Tapper';
+import { AuthContext } from '../navigation/AuthProvider';
 
-const base_url = 'https://832b-196-12-140-219.eu.ngrok.io/';
+
+const base_url = 'https://2f66-197-157-184-150.in.ngrok.io';
 
 async function requestGeolocationPermission() {
   try{
@@ -196,6 +45,8 @@ export default class Home extends Component {
   static navigationOptions = {
     header: null,
   };
+
+  static contextType = AuthContext
 
 
   state = {
@@ -244,6 +95,8 @@ export default class Home extends Component {
 
 
 	render() {
+
+    const {logout} = this.context
     
 		return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
@@ -280,8 +133,15 @@ export default class Home extends Component {
               this.enterUser('hike');
             }} 
           />
+
+          <Tapper 
+            title="Logout" 
+            color="#ff0000" 
+            onPress={() => {
+              logout()
+            }} 
+          />
         </View>
-        
       </KeyboardAvoidingView>
 		);
 	}

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "520132391992",
+    "project_id": "ride-king-19833",
+    "storage_bucket": "ride-king-19833.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:520132391992:android:eee3fb49740cf7a0da22cd",
+        "android_client_info": {
+          "package_name": "com.ridesharer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "520132391992-0kc5dg70qgicmv5mh4dqku1s09onpihv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9gagd3YuelSrFzn1QmySS-wicQg_zRWg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "520132391992-0kc5dg70qgicmv5mh4dqku1s09onpihv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
