@@ -21,7 +21,7 @@ import {regionFrom, getLatLonDiffInMeters} from '../lib/location';
 import Tapper from '../components/Tapper';
 
 const google_api_key = 'AIzaSyDBhN5LLS6h3KHmp6mPSx9MxqvAkBx7OnU';
-const base_url = 'https://2f66-197-157-184-150.in.ngrok.io';
+const base_url = 'https://rw-ridesharer.herokuapp.com';
 const pusher_app_key = 'fc751ce6df2bbaa11bca';
 const pusher_app_cluster = 'mt1';
 
@@ -81,7 +81,7 @@ export default class Map extends Component {
     const username = route.params['username'];
 
     this.pusher = new Pusher(pusher_app_key, {
-      authEndpoint: `${base_url}/pusher-auth.php`,
+      authEndpoint: `${base_url}/pusher-auth`,
       cluster: pusher_app_cluster,
       encrypted: true,
     });
@@ -149,7 +149,7 @@ export default class Map extends Component {
     this.users_channel.trigger('client-rider-accepted', rider_data);
 
     axios
-      .post(`${base_url}/delete-route.php`, {
+      .post(`${base_url}/delete-route`, {
         username: username,
       })
       .then(response => {
@@ -354,7 +354,7 @@ export default class Map extends Component {
 
   shareRide = username => {
     axios
-      .post(`${base_url}/save-route.php`, {
+      .post(`${base_url}/save-route`, {
         username: username,
         from: this.state.from,
         to: this.state.to,
@@ -377,7 +377,7 @@ export default class Map extends Component {
 
         if (this.journey_id && this.hiker) {
           axios
-            .post(`${base_url}/update-route.php`, {
+            .post(`${base_url}/update-route`, {
               id: this.journey_id,
               lat: latitude,
               lon: longitude,
@@ -440,20 +440,22 @@ export default class Map extends Component {
   hikeRide = username => {
     var interval = setInterval(() => {
       axios
-        .post(`${base_url}/search-routes.php`, {
+        .post(`${base_url}/search-routes`, {
           origin: this.state.start_location,
           dest: this.state.end_location,
         })
         .then(response => {
+          // console.log("something")
+          console.log(response.data)
           if (response.data) {
             clearInterval(interval); // assumes the rider will accept the request
 
             let rider = response.data;
-
+            console.log("Subscribing")
             this.riders_channel = this.pusher.subscribe(
               `private-user-${rider.username}`,
             );
-
+            console.log("subscribing succeeded")
             this.riders_channel.bind('pusher:subscription_succeeded', () => {
               this.riders_channel.trigger('client-rider-request', {
                 username: username, // username of the current user
@@ -462,13 +464,13 @@ export default class Map extends Component {
                 origin_coords: this.state.start_location,
               });
             });
-
+            console.log("binding to accepted")
             this.riders_channel.bind('client-rider-accepted', rider_data => {
               Alert.alert(
                 `${rider_data.username} accepted your request`,
                 `You will now receive updates of their current location`,
               );
-
+              console.log("user accepted your ride")
               this.setState({
                 is_loading: false,
                 has_journey: true,

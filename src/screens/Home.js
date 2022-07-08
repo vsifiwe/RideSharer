@@ -16,7 +16,7 @@ import Tapper from '../components/Tapper';
 import { AuthContext } from '../navigation/AuthProvider';
 
 
-const base_url = 'https://2f66-197-157-184-150.in.ngrok.io';
+const base_url = 'https://rw-ridesharer.herokuapp.com';
 
 async function requestGeolocationPermission() {
   try{
@@ -68,7 +68,7 @@ export default class Home extends Component {
         is_loading: true
       });
       
-      axios.post(`${base_url}/create-user.php`, {
+      axios.post(`${base_url}/create-user`, {
         username: this.state.username
       })
       .then((response) => {
@@ -127,7 +127,7 @@ export default class Home extends Component {
           />
          
           <Tapper 
-            title="Hitch a Ride" 
+            title="request a Ride" 
             color="#00bcf5" 
             onPress={() => {
               this.enterUser('hike');
